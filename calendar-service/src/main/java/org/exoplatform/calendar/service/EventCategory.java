@@ -16,6 +16,8 @@
  **/
 package org.exoplatform.calendar.service;
 
+import java.io.Serializable;
+
 import org.exoplatform.services.jcr.util.IdGenerator;
 
 /**
@@ -24,7 +26,8 @@ import org.exoplatform.services.jcr.util.IdGenerator;
  *          hung.nguyen@exoplatform.com
  * Jul 11, 2007  
  */
-public class EventCategory {
+public class EventCategory implements Serializable {  
+
   private String  id;
 
   private String  name;

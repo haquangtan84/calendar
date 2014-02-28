@@ -18,6 +18,7 @@ package org.exoplatform.calendar.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Calendar;
 import javax.jcr.ItemNotFoundException;
 import javax.jcr.Node;
@@ -36,9 +37,18 @@ import org.exoplatform.services.log.Log;
  * Sep 28, 2007  
  */
 
-public class Attachment {
+public class Attachment implements Serializable {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 4367780505207606491L;
+
+  /**
+   * 
+   */
+
   private static final Log log = ExoLogger.getExoLogger(Attachment.class);
-  
+
   private String   id;
 
   private String   name;
@@ -54,6 +64,8 @@ public class Attachment {
   private String   workspace;
 
   private String   resourceId;
+
+  private String dataPath = "";
 
   /**
    * This class use for keep data and infomation about attachments
@@ -95,17 +107,22 @@ public class Attachment {
     this.name = name_;
   }
 
+  public void setDataPath(String path){
+    this.dataPath = path;
+  }
   public String getDataPath() throws Exception {
-    Node attachmentData;
     try {
-      attachmentData = (Node) getSesison().getItem(getId());
+      if(getSesison() != null) {
+        Node attachmentData = (Node) getSesison().getItem(getId());
+        if(attachmentData != null) this.dataPath = attachmentData.getPath();
+      }
     } catch (ItemNotFoundException e) {
       if (log.isDebugEnabled()) {
         log.debug("The attachment note is not exist", e);
       }
-      return null;
+
     }
-    return attachmentData.getPath();
+    return dataPath;
   }
 
   private Session getSesison() throws Exception {
@@ -153,14 +170,14 @@ public class Attachment {
 
   /**
    * keep id to make sure temp file will be removed after use uploaded file
-  */
+   */
   public void setResourceId(String resourceId) {
     this.resourceId = resourceId;
   }
 
   /**
    * get id to call download service remove temp file
-  */
+   */
   public String getResourceId() {
     return resourceId;
   }
