@@ -9,7 +9,7 @@
   </parent>
   <groupId>org.exoplatform.calendar</groupId>
   <artifactId>calendar</artifactId>
-  <version>4.1.x-cal-upgrade-gatein-3.7.x-SNAPSHOT</version>
+  <version>4.1.x-cal-rest-api-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo Calendar</name>
   <description>eXo Calendar application</description>
